@@ -571,6 +571,100 @@
             transform: none;
         }
 
+        /* Magazines Section */
+        .magazines {
+            padding: 6rem 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(201, 169, 110, 0.05) 50%, transparent 100%);
+        }
+
+        .magazines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .magazine-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .magazine-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .magazine-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .magazine-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(201, 169, 110, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .magazine-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .magazine-card h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .magazine-card .issue-info {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .magazine-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .magazine-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(201, 169, 110, 0.1);
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .magazine-link:hover {
+            background: rgba(201, 169, 110, 0.2);
+            gap: 0.8rem;
+            box-shadow: 0 5px 20px rgba(201, 169, 110, 0.2);
+        }
+
         /* QR Code Section */
         .qr-section {
             padding: 6rem 5%;
@@ -721,6 +815,7 @@
         <ul class="nav-links">
             <li><a href="#home">首页</a></li>
             <li><a href="#articles">文章精选</a></li>
+            <li><a href="#magazines">期刊杂志</a></li>
             <li><a href="#ai">智能助手</a></li>
             <li><a href="#qr">关注公众号</a></li>
         </ul>
@@ -790,6 +885,16 @@
         </div>
     </section>
 
+    <section class="magazines" id="magazines">
+        <div class="section-header">
+            <h2>期刊杂志</h2>
+            <p>《上财风险管理论坛》电子版PDF下载</p>
+        </div>
+        <div class="magazines-grid" id="magazinesGrid">
+            <!-- Magazines will be loaded dynamically -->
+        </div>
+    </section>
+
     <section class="qr-section" id="qr">
         <div class="section-header">
             <h2>关注公众号</h2>
@@ -809,6 +914,7 @@
         <div class="footer-links">
             <a href="#home">首页</a>
             <a href="#articles">文章</a>
+            <a href="#magazines">期刊杂志</a>
             <a href="#ai">AI助手</a>
             <a href="#qr">公众号</a>
         </div>
@@ -956,6 +1062,59 @@
         }
 
         renderArticles();
+
+        // Magazines data
+        const magazines = [
+            {
+                title: "《上财风险管理论坛》",
+                issue: "2017年第2期",
+                theme: "风险管理专业期刊",
+                pages: 33,
+                date: "2017",
+                file: "./magazines/magazine_2017_02.pdf"
+            },
+            {
+                title: "《上财风险管理论坛》",
+                issue: "2018年第1期",
+                theme: "风险管理专业期刊",
+                pages: 27,
+                date: "2018",
+                file: "./magazines/magazine_2018_01.pdf"
+            },
+            {
+                title: "《上财风险管理论坛》",
+                issue: "2019年第1期",
+                theme: "大资管行业的风险管理",
+                pages: 26,
+                date: "2019",
+                file: "./magazines/magazine_2019_01.pdf"
+            }
+        ];
+
+        // Render magazines
+        function renderMagazines() {
+            const grid = document.getElementById('magazinesGrid');
+            grid.innerHTML = magazines.map(mag => `
+                <div class="magazine-card">
+                    <div class="magazine-icon">&#128214;</div>
+                    <h3>${mag.title}</h3>
+                    <div class="issue-info">${mag.issue}</div>
+                    <p>${mag.theme}<br>共 ${mag.pages} 页 | ${mag.date}年刊</p>
+                    <a class="magazine-link" href="${mag.file}" target="_blank" rel="noopener noreferrer">
+                        阅读PDF
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        renderMagazines();
 
         // AI Chat functionality
         const API_KEY = '325d6fa364954d2e871c30ba95b553bd.KBdQdqgJgELJBhnv';
