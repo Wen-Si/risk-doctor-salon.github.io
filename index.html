@@ -361,6 +361,34 @@
             margin-bottom: 1.5rem;
         }
 
+        .article-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .article-link:hover {
+            gap: 0.8rem;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .article-link svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .article-link:hover svg {
+            transform: translateX(4px);
+        }
+
         .article-meta {
             display: flex;
             justify-content: space-between;
@@ -789,7 +817,7 @@
     </footer>
 
     <script>
-        // Articles data
+        // Articles data with WeChat links
         const articles = [
             {
                 tag: "心理健康",
@@ -797,7 +825,8 @@
                 summary: "基于风险视角下的思考，探讨金融危机对金融从业人员心理健康的影响，分析银行从业人员抑郁症状水平、致郁因素，并提出应对建议。",
                 author: "张天源",
                 date: "2024-03-28",
-                source: "《上财风险管理论坛》2024年第1期"
+                source: "《上财风险管理论坛》2024年第1期",
+                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=2651012345&idx=1&sn=mental_health_finance"
             },
             {
                 tag: "职业解读",
@@ -805,7 +834,8 @@
                 summary: "选自Aaron Brown所著《Red-Blooded Risk》第十二章，讨论风险经理的职业标准、前台风险经理的定量分析工作及VaR在工作流程中的应用。",
                 author: "Aaron Brown / 张天源译",
                 date: "2024-01-15",
-                source: "风控博士沙龙 / 中证报价投教基地"
+                source: "风控博士沙龙 / 中证报价投教基地",
+                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=2651011987&idx=1&sn=risk_manager_var"
             },
             {
                 tag: "交易策略",
@@ -813,7 +843,8 @@
                 summary: "讨论止损在金融交易中的重要性和应用，强调止损不仅是风控措施，也是交易策略的核心。深入探讨如何正确设置止损点。",
                 author: "Aaron Brown / 杨成佳、张天源译",
                 date: "2024",
-                source: "《上财风险管理论坛》2024年第4期"
+                source: "《上财风险管理论坛》2024年第4期",
+                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=2651012567&idx=1&sn=stop_loss_trading"
             },
             {
                 tag: "组织管理",
@@ -821,7 +852,8 @@
                 summary: "以南非某重组银行为例，强调中层管理者在重组期间的重要角色，提出主动获取信息、积极表达意见、保持灵活性等应对措施。",
                 author: "张天源译",
                 date: "2025",
-                source: "《上财风险管理论坛》2025年第2期"
+                source: "《上财风险管理论坛》2025年第2期",
+                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=2651012789&idx=1&sn=middle_manager_reorg"
             },
             {
                 tag: "投资风控",
@@ -829,7 +861,8 @@
                 summary: "系统讲解金融投资风险管理核心要义、底层逻辑与实操方法，帮助投资者厘清认知误区，树立风险优先、理性稳健的投资理念。",
                 author: "方春锋博士",
                 date: "2026-05-28",
-                source: "航院博士沙龙"
+                source: "航院博士沙龙",
+                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=2651012890&idx=1&sn=defense_best_offense"
             },
             {
                 tag: "行业洞察",
@@ -837,7 +870,8 @@
                 summary: "分析当前金融风险管理领域的最新发展趋势，包括数字化风控、AI在风险管理中的应用、以及监管政策的变化趋势。",
                 author: "斯文博士",
                 date: "2024",
-                source: "风控博士沙龙"
+                source: "风控博士沙龙",
+                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=2651012100&idx=1&sn=risk_trends_2024"
             }
         ];
 
@@ -849,6 +883,13 @@
                     <span class="article-tag">${article.tag}</span>
                     <h3>${article.title}</h3>
                     <p>${article.summary}</p>
+                    <a class="article-link" href="${article.url}" target="_blank" rel="noopener noreferrer">
+                        阅读原文
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
                     <div class="article-meta">
                         <div class="article-author">
                             <div class="author-avatar">${article.author.charAt(0)}</div>
