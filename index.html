@@ -3,191 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>风控博士沙龙 - 金融风险管理专业平台</title>
+    <title>风控博士沙龙 - 全球金融风险管理智库</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0a1628;
-            --secondary: #1e3a5f;
-            --accent: #00d4aa;
-            --accent-glow: rgba(0, 212, 170, 0.3);
-            --gold: #c9a96e;
-            --text: #e8ecf1;
-            --text-muted: #8b9bb4;
-            --card-bg: rgba(30, 58, 95, 0.4);
-            --glass: rgba(10, 22, 40, 0.85);
+            --bg-deep: #060912;
+            --bg-base: #0a0e1a;
+            --bg-card: #0f1524;
+            --bg-elevated: #141c30;
+            --border: rgba(0, 240, 255, 0.12);
+            --border-hover: rgba(0, 240, 255, 0.3);
+            --accent: #00f0ff;
+            --accent-dim: rgba(0, 240, 255, 0.6);
+            --accent-glow: rgba(0, 240, 255, 0.15);
+            --gold: #d4af37;
+            --gold-dim: rgba(212, 175, 55, 0.5);
+            --text: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --red: #ff4757;
+            --green: #00d68f;
+            --orange: #ffa502;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: var(--primary);
+            background: var(--bg-deep);
             color: var(--text);
             overflow-x: hidden;
             line-height: 1.6;
         }
 
-        /* Animated background */
-        .bg-animation {
+        /* === ATMOSPHERIC BACKGROUND === */
+        .bg-layer {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(ellipse at 20% 80%, rgba(0, 212, 170, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(30, 58, 95, 0.6) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(10, 22, 40, 1) 0%, rgba(5, 12, 25, 1) 100%);
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(ellipse 800px 600px at 15% 10%, rgba(0, 240, 255, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 600px 800px at 85% 70%, rgba(212, 175, 55, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse 1000px 500px at 50% 100%, rgba(0, 240, 255, 0.03) 0%, transparent 70%),
+                var(--bg-deep);
         }
 
-        .grid-overlay {
+        .grid-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             z-index: -1;
-            background-image: 
-                linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-image:
+                linear-gradient(rgba(0, 240, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
             pointer-events: none;
         }
 
-        /* Navigation */
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.3;
+            z-index: 9999;
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* === NAVIGATION === */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1rem 5%;
+            padding: 0.8rem 4%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(10, 22, 40, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 212, 170, 0.1);
+            background: rgba(6, 9, 18, 0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
             text-decoration: none;
         }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--accent);
-            border-radius: 8px;
+        .logo-mark {
+            width: 38px;
+            height: 38px;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        .logo-icon::before {
-            content: 'R';
-            font-size: 1.4rem;
+        .logo-mark svg { width: 100%; height: 100%; }
+
+        .logo-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: var(--accent);
+            color: var(--text);
+            letter-spacing: 2px;
         }
+
+        .logo-text span { color: var(--accent); }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 0.3rem;
             list-style: none;
         }
 
         .nav-links a {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            position: relative;
+            font-size: 0.82rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }
 
         .nav-links a:hover {
             color: var(--accent);
+            background: var(--accent-glow);
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s ease;
+        .nav-clock {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-dim);
+            letter-spacing: 1px;
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
+        /* === HERO === */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8rem 5% 4rem;
+            padding: 6rem 4% 3rem;
             position: relative;
         }
 
-        .hero-content {
-            text-align: center;
-            max-width: 900px;
-        }
+        .hero-content { text-align: center; max-width: 900px; }
 
-        .hero-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(0, 212, 170, 0.1);
-            border: 1px solid var(--accent);
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1.2rem;
+            background: var(--accent-glow);
+            border: 1px solid var(--border-hover);
             border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
             color: var(--accent);
-            font-size: 0.85rem;
             margin-bottom: 2rem;
-            animation: pulse 2s infinite;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-            50% { box-shadow: 0 0 20px 5px var(--accent-glow); }
+        .hero-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
         }
 
         .hero h1 {
             font-family: 'Noto Serif SC', serif;
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+            margin-bottom: 1.2rem;
+            letter-spacing: 4px;
+            background: linear-gradient(180deg, var(--text) 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
+        .hero-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--accent-dim);
+            margin-bottom: 1.5rem;
+            letter-spacing: 3px;
+            font-style: italic;
+        }
+
+        .hero-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
             margin-bottom: 2.5rem;
             line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .hero-buttons {
@@ -198,925 +255,1554 @@
         }
 
         .btn {
-            padding: 1rem 2.5rem;
+            padding: 0.9rem 2rem;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
         }
 
         .btn-primary {
             background: var(--accent);
-            color: var(--primary);
-            border: none;
+            color: var(--bg-deep);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px var(--accent-glow);
+            box-shadow: 0 8px 30px var(--accent-glow);
         }
 
-        .btn-secondary {
+        .btn-outline {
             background: transparent;
             color: var(--accent);
-            border: 1px solid var(--accent);
+            border: 1px solid var(--border-hover);
         }
 
-        .btn-secondary:hover {
-            background: rgba(0, 212, 170, 0.1);
+        .btn-outline:hover {
+            background: var(--accent-glow);
+            border-color: var(--accent);
         }
 
-        /* Floating elements */
-        .floating-card {
-            position: absolute;
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 212, 170, 0.2);
-            border-radius: 12px;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-card:nth-child(1) {
-            top: 20%;
-            left: 5%;
-            animation-delay: 0s;
-        }
-
-        .floating-card:nth-child(2) {
-            top: 60%;
-            right: 5%;
-            animation-delay: 2s;
-        }
-
-        .floating-card:nth-child(3) {
-            bottom: 20%;
-            left: 10%;
-            animation-delay: 4s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .card-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Articles Section */
-        .articles {
-            padding: 6rem 5%;
-        }
+        /* === SECTION COMMON === */
+        section { padding: 5rem 4%; position: relative; }
 
         .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .section-header h2 {
+        .section-title-group h2 {
             font-family: 'Noto Serif SC', serif;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--text);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            letter-spacing: 2px;
         }
 
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
+        .section-title-group .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .articles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            max-width: 400px;
+            text-align: right;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+            margin-bottom: 3rem;
+            opacity: 0.3;
+        }
+
+        /* === SECTION 1: REGULATORY === */
+        .regulatory-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .reg-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .article-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 212, 170, 0.15);
-            border-radius: 16px;
-            padding: 2rem;
+        .reg-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+            transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .reg-item:hover {
+            border-color: var(--border-hover);
+            border-left-color: var(--accent);
+            background: var(--bg-elevated);
+            transform: translateX(4px);
+        }
+
+        .reg-region {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .reg-flag {
+            font-size: 1.5rem;
+        }
+
+        .reg-region-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reg-body h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            line-height: 1.5;
+        }
+
+        .reg-body h3 a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .reg-body h3 a:hover { color: var(--accent); }
+
+        .reg-summary {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 0.6rem;
+        }
+
+        .reg-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            flex-wrap: wrap;
+        }
+
+        .reg-meta span { display: flex; align-items: center; gap: 4px; }
+
+        .reg-tag {
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 500;
+        }
+
+        .tag-china { background: rgba(255, 71, 87, 0.15); color: var(--red); }
+        .tag-us { background: rgba(0, 214, 143, 0.15); color: var(--green); }
+        .tag-eu { background: rgba(255, 165, 2, 0.15); color: var(--orange); }
+        .tag-basel { background: rgba(212, 175, 55, 0.15); color: var(--gold); }
+
+        .reg-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        /* === SECTION 2: STARTUPS === */
+        .startups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .startup-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.8rem;
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .article-card::before {
+        .startup-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
+            top: 0; left: 0; right: 0;
+            height: 2px;
             background: linear-gradient(90deg, var(--accent), transparent);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.4s ease;
         }
 
-        .article-card:hover::before {
-            transform: scaleX(1);
+        .startup-card:hover::before { transform: scaleX(1); }
+
+        .startup-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
-        .article-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 212, 170, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .article-tag {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: rgba(0, 212, 170, 0.1);
-            color: var(--accent);
-            border-radius: 4px;
-            font-size: 0.8rem;
+        .startup-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             margin-bottom: 1rem;
         }
 
-        .article-card h3 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-            line-height: 1.4;
-        }
-
-        .article-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .article-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .article-link:hover {
-            gap: 0.8rem;
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .article-link svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.3s ease;
-        }
-
-        .article-link:hover svg {
-            transform: translateX(4px);
-        }
-
-        .article-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .article-author {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .author-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--secondary);
+        .startup-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
-            color: var(--accent);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            flex-shrink: 0;
         }
 
-        /* AI Assistant Section */
-        .ai-assistant {
-            padding: 6rem 5%;
-            background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 170, 0.05) 50%, transparent 100%);
+        .startup-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .startup-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .startup-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .startup-tags {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .startup-tag {
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .startup-funding {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .funding-amount {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .startup-link {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: gap 0.2s;
+        }
+
+        .startup-link:hover { gap: 8px; }
+
+        /* === SECTION 3: TRAINING === */
+        .training-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .training-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .training-card:hover {
+            border-color: var(--gold-dim);
+            background: var(--bg-elevated);
+        }
+
+        .training-badge {
+            display: inline-block;
+            padding: 0.25rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            align-self: flex-start;
+        }
+
+        .badge-cert { background: rgba(212, 175, 55, 0.15); color: var(--gold); }
+        .badge-domestic { background: rgba(0, 240, 255, 0.12); color: var(--accent); }
+        .badge-executive { background: rgba(255, 165, 2, 0.15); color: var(--orange); }
+
+        .training-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .training-org {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .training-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .training-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .training-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .price-free { color: var(--green); }
+        .price-paid { color: var(--gold); }
+
+        .training-link {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .training-link:hover { color: var(--text); }
+
+        /* === SECTION 4: VIDEO COURSES === */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .video-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-thumb {
+            height: 160px;
+            background: var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(6, 9, 18, 0.8) 100%);
+        }
+
+        .video-play {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.15);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .video-play {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .video-play svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent);
+            transition: fill 0.3s;
+        }
+
+        .video-card:hover .video-play svg { fill: var(--bg-deep); }
+
+        .video-platform {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            padding: 0.2rem 0.6rem;
+            background: rgba(6, 9, 18, 0.8);
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+
+        .video-body { padding: 1.2rem 1.5rem 1.5rem; }
+
+        .video-body h3 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            line-height: 1.5;
+        }
+
+        .video-provider {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .video-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .video-meta span { display: flex; align-items: center; gap: 4px; }
+
+        /* === AI ASSISTANT === */
+        .ai-section {
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 240, 255, 0.03) 50%, transparent 100%);
         }
 
         .ai-container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 212, 170, 0.2);
-            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-hover);
+            border-radius: 16px;
             overflow: hidden;
         }
 
         .ai-header {
-            padding: 1.5rem 2rem;
-            background: rgba(0, 212, 170, 0.1);
-            border-bottom: 1px solid rgba(0, 212, 170, 0.2);
+            padding: 1.2rem 1.8rem;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
         .ai-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), rgba(0, 240, 255, 0.3));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            position: relative;
         }
 
+        .ai-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: var(--green);
+            border-radius: 50%;
+            border: 2px solid var(--bg-elevated);
+        }
+
+        .ai-avatar svg { width: 24px; height: 24px; fill: var(--bg-deep); }
+
         .ai-title h3 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.2rem;
-            color: var(--text);
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         .ai-title p {
-            font-size: 0.85rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
-        }
-
-        .ai-status {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--accent);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .ai-chat {
-            padding: 2rem;
-            height: 400px;
+            padding: 1.5rem;
+            height: 380px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
-        .message {
+        .msg {
             max-width: 80%;
-            padding: 1rem 1.5rem;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            animation: fadeIn 0.3s ease;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            animation: msgIn 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .message.user {
+        .msg.user {
             align-self: flex-end;
             background: var(--accent);
-            color: var(--primary);
+            color: var(--bg-deep);
             border-bottom-right-radius: 4px;
         }
 
-        .message.ai {
+        .msg.ai {
             align-self: flex-start;
-            background: rgba(30, 58, 95, 0.6);
-            color: var(--text);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
             border-bottom-left-radius: 4px;
         }
 
         .ai-input-area {
-            padding: 1.5rem 2rem;
-            border-top: 1px solid rgba(0, 212, 170, 0.2);
+            padding: 1rem 1.5rem 1.5rem;
+            border-top: 1px solid var(--border);
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .ai-input {
             flex: 1;
-            padding: 1rem 1.5rem;
-            background: rgba(30, 58, 95, 0.4);
-            border: 1px solid rgba(0, 212, 170, 0.2);
-            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 10px;
             color: var(--text);
-            font-size: 1rem;
+            font-size: 0.9rem;
+            font-family: 'Noto Sans SC', sans-serif;
             outline: none;
-            transition: all 0.3s ease;
+            transition: border-color 0.2s;
         }
 
-        .ai-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
-
-        .ai-input::placeholder {
-            color: var(--text-muted);
-        }
+        .ai-input:focus { border-color: var(--accent); }
+        .ai-input::placeholder { color: var(--text-muted); }
 
         .ai-send {
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.5rem;
             background: var(--accent);
-            color: var(--primary);
+            color: var(--bg-deep);
             border: none;
-            border-radius: 12px;
-            font-size: 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
+            font-family: 'Noto Sans SC', sans-serif;
         }
 
-        .ai-send:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px var(--accent-glow);
+        .ai-send:hover { box-shadow: 0 4px 20px var(--accent-glow); }
+        .ai-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .typing { display: flex; gap: 4px; padding: 0.5rem 0; }
+        .typing span {
+            width: 7px; height: 7px;
+            background: var(--accent-dim);
+            border-radius: 50%;
+            animation: typeBounce 1.4s infinite;
+        }
+        .typing span:nth-child(2) { animation-delay: 0.2s; }
+        .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typeBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
         }
 
-        .ai-send:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Magazines Section */
-        .magazines {
-            padding: 6rem 5%;
-            background: linear-gradient(180deg, transparent 0%, rgba(201, 169, 110, 0.05) 50%, transparent 100%);
-        }
-
+        /* === MAGAZINES === */
         .magazines-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        .magazine-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(201, 169, 110, 0.2);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+        .mag-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
             text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .magazine-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--gold), transparent);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
+        .mag-card:hover {
+            border-color: var(--gold-dim);
+            transform: translateY(-3px);
         }
 
-        .magazine-card:hover::before {
-            transform: scaleX(1);
+        .mag-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
         }
 
-        .magazine-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(201, 169, 110, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .magazine-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .magazine-card h3 {
+        .mag-card h3 {
             font-family: 'Noto Serif SC', serif;
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
         }
 
-        .magazine-card .issue-info {
+        .mag-issue {
             color: var(--gold);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.82rem;
+            margin-bottom: 0.6rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .magazine-card p {
+        .mag-card p {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.78rem;
+            margin-bottom: 1rem;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
         }
 
-        .magazine-link {
+        .mag-link {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background: rgba(201, 169, 110, 0.1);
-            border: 1px solid var(--gold);
+            gap: 0.4rem;
+            padding: 0.5rem 1.2rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold-dim);
             border-radius: 8px;
             color: var(--gold);
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            transition: all 0.2s;
         }
 
-        .magazine-link:hover {
-            background: rgba(201, 169, 110, 0.2);
-            gap: 0.8rem;
-            box-shadow: 0 5px 20px rgba(201, 169, 110, 0.2);
+        .mag-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            gap: 0.6rem;
         }
 
-        /* QR Code Section */
-        .qr-section {
-            padding: 6rem 5%;
-            text-align: center;
-        }
+        /* === QR SECTION === */
+        .qr-section { text-align: center; }
 
         .qr-container {
-            max-width: 500px;
+            max-width: 420px;
             margin: 0 auto;
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 212, 170, 0.2);
-            border-radius: 20px;
-            padding: 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
         }
 
         .qr-code {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 2rem;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 1.5rem;
             background: white;
             border-radius: 12px;
             padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .qr-code img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+        .qr-code img { width: 100%; height: 100%; object-fit: contain; }
 
         .qr-container h3 {
             font-family: 'Noto Serif SC', serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
         }
 
         .qr-container p {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* Footer */
+        /* === FOOTER === */
         footer {
-            padding: 3rem 5%;
-            border-top: 1px solid rgba(0, 212, 170, 0.1);
+            padding: 3rem 4%;
+            border-top: 1px solid var(--border);
             text-align: center;
         }
 
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        footer .footer-links {
+        .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        footer .footer-links a {
+        .footer-links a {
             color: var(--text-muted);
             text-decoration: none;
-            transition: color 0.3s ease;
+            font-size: 0.82rem;
+            transition: color 0.2s;
         }
 
-        footer .footer-links a:hover {
-            color: var(--accent);
+        .footer-links a:hover { color: var(--accent); }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.78rem;
         }
 
-        /* Responsive */
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--bg-elevated); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .articles-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .floating-card {
-                display: none;
-            }
-
-            .ai-chat {
-                height: 300px;
-            }
+            .hero h1 { font-size: 2.4rem; }
+            .hero-sub { font-size: 1.1rem; }
+            .nav-links { display: none; }
+            .nav-clock { display: none; }
+            .reg-item { grid-template-columns: 1fr; }
+            .reg-date { text-align: left; }
+            .section-desc { text-align: left; }
+            .section-header { flex-direction: column; align-items: flex-start; }
+            .ai-chat { height: 300px; }
+            .hero-stats { gap: 1.5rem; }
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        /* === ANIMATIONS === */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        ::-webkit-scrollbar-track {
-            background: var(--primary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--secondary);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent);
-        }
-
-        /* Loading animation */
-        .typing-indicator {
-            display: flex;
-            gap: 4px;
-            padding: 1rem 1.5rem;
-        }
-
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out both;
-        }
-
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes typing {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
-    <div class="grid-overlay"></div>
+    <div class="bg-layer"></div>
+    <div class="grid-bg"></div>
+    <div class="scan-line"></div>
 
     <nav>
-        <a href="#" class="logo">
-            <div class="logo-icon"></div>
-            风控博士沙龙
+        <a href="#home" class="logo">
+            <div class="logo-mark">
+                <svg viewBox="0 0 40 40" fill="none">
+                    <rect x="2" y="2" width="36" height="36" rx="8" stroke="#00f0ff" stroke-width="2"/>
+                    <path d="M12 14 L20 10 L28 14 L28 26 L20 30 L12 26 Z" stroke="#00f0ff" stroke-width="1.5" fill="none"/>
+                    <circle cx="20" cy="20" r="3" fill="#00f0ff"/>
+                    <path d="M20 10 L20 6" stroke="#00f0ff" stroke-width="1.5"/>
+                    <path d="M28 14 L32 12" stroke="#00f0ff" stroke-width="1.5"/>
+                    <path d="M28 26 L32 28" stroke="#00f0ff" stroke-width="1.5"/>
+                    <path d="M20 30 L20 34" stroke="#00f0ff" stroke-width="1.5"/>
+                    <path d="M12 26 L8 28" stroke="#00f0ff" stroke-width="1.5"/>
+                    <path d="M12 14 L8 12" stroke="#00f0ff" stroke-width="1.5"/>
+                </svg>
+            </div>
+            <div class="logo-text">风控博士<span>沙龙</span></div>
         </a>
         <ul class="nav-links">
-            <li><a href="#home">首页</a></li>
-            <li><a href="#articles">文章精选</a></li>
-            <li><a href="#magazines">期刊杂志</a></li>
-            <li><a href="#ai">智能助手</a></li>
-            <li><a href="#qr">关注公众号</a></li>
+            <li><a href="#regulatory">监管动态</a></li>
+            <li><a href="#startups">风控科创</a></li>
+            <li><a href="#training">培训认证</a></li>
+            <li><a href="#courses">视频课程</a></li>
+            <li><a href="#magazines">期刊</a></li>
+            <li><a href="#ai">AI助手</a></li>
         </ul>
+        <div class="nav-clock" id="navClock">--:--:--</div>
     </nav>
 
+    <!-- HERO -->
     <section class="hero" id="home">
-        <div class="floating-card">
-            <div class="card-icon">&#128200;</div>
-            <div class="card-text">风险管理</div>
-        </div>
-        <div class="floating-card">
-            <div class="card-icon">&#128218;</div>
-            <div class="card-text">专业研究</div>
-        </div>
-        <div class="floating-card">
-            <div class="card-icon">&#127942;</div>
-            <div class="card-text">行业洞察</div>
-        </div>
-
         <div class="hero-content">
-            <div class="hero-badge">&#9889; 金融风险管理专业平台</div>
+            <div class="hero-tag">GLOBAL RISK INTELLIGENCE PLATFORM</div>
             <h1>风控博士沙龙</h1>
-            <p>聚焦金融风险管理领域，汇聚行业精英智慧，分享前沿风控理论与实践。<br>由斯文博士创立，与《上财风险管理论坛》杂志深度合作。</p>
+            <div class="hero-sub">Risk · Intelligence · Innovation</div>
+            <p class="hero-desc">全球金融风险管理智库 — 汇聚各国监管动态、前沿风控科技、专业培训认证与优质学习资源<br>由斯文博士创立，与《上财风险管理论坛》杂志深度合作</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-num" id="statRegs">20+</span>
+                    <span class="stat-label">监管政策</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">10+</span>
+                    <span class="stat-label">风控科创</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">8+</span>
+                    <span class="stat-label">培训机构</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">10+</span>
+                    <span class="stat-label">视频课程</span>
+                </div>
+            </div>
             <div class="hero-buttons">
-                <a href="#articles" class="btn btn-primary">浏览文章</a>
-                <a href="#ai" class="btn btn-secondary">智能助手</a>
+                <a href="#regulatory" class="btn btn-primary">探索平台</a>
+                <a href="#ai" class="btn btn-outline">AI智能助手</a>
             </div>
         </div>
     </section>
 
-    <section class="articles" id="articles">
+    <!-- SECTION 1: REGULATORY -->
+    <section id="regulatory">
         <div class="section-header">
-            <h2>精选文章</h2>
-            <p>来自风控博士沙龙公众号的深度内容</p>
+            <div class="section-title-group">
+                <h2>全球监管动态</h2>
+                <div class="subtitle">REGULATORY INTELLIGENCE</div>
+            </div>
+            <p class="section-desc">全球各国监管机构关于金融风险管理的最新发文与深度解读</p>
         </div>
-        <div class="articles-grid" id="articlesGrid">
-            <!-- Articles will be loaded dynamically -->
+        <div class="section-divider"></div>
+
+        <div class="regulatory-filters">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="china">中国</button>
+            <button class="filter-btn" data-filter="us">美国</button>
+            <button class="filter-btn" data-filter="eu">欧洲</button>
+            <button class="filter-btn" data-filter="basel">巴塞尔</button>
         </div>
+
+        <div class="reg-list" id="regList"></div>
     </section>
 
-    <section class="ai-assistant" id="ai">
+    <!-- SECTION 2: STARTUPS -->
+    <section id="startups">
         <div class="section-header">
-            <h2>AI 智能助手</h2>
-            <p>基于智谱 GLM-4.5-Flash 大模型，为您解答金融风险管理相关问题</p>
+            <div class="section-title-group">
+                <h2>风控科创企业</h2>
+                <div class="subtitle">RISK TECH INNOVATORS</div>
+            </div>
+            <p class="section-desc">国内外聚焦于金融风险管理产品的初创型公司</p>
         </div>
+        <div class="section-divider"></div>
+        <div class="startups-grid" id="startupsGrid"></div>
+    </section>
+
+    <!-- SECTION 3: TRAINING -->
+    <section id="training">
+        <div class="section-header">
+            <div class="section-title-group">
+                <h2>培训与认证</h2>
+                <div class="subtitle">PROFESSIONAL DEVELOPMENT</div>
+            </div>
+            <p class="section-desc">国内外优质的金融风险管理培训机构与认证体系</p>
+        </div>
+        <div class="section-divider"></div>
+        <div class="training-grid" id="trainingGrid"></div>
+    </section>
+
+    <!-- SECTION 4: VIDEO COURSES -->
+    <section id="courses">
+        <div class="section-header">
+            <div class="section-title-group">
+                <h2>免费视频课程</h2>
+                <div class="subtitle">FREE LEARNING RESOURCES</div>
+            </div>
+            <p class="section-desc">精选金融风险管理优质免费视频课程</p>
+        </div>
+        <div class="section-divider"></div>
+        <div class="video-grid" id="videoGrid"></div>
+    </section>
+
+    <!-- AI ASSISTANT -->
+    <section class="ai-section" id="ai">
+        <div class="section-header">
+            <div class="section-title-group">
+                <h2>AI 智能助手</h2>
+                <div class="subtitle">POWERED BY GLM-4.5-FLASH</div>
+            </div>
+            <p class="section-desc">基于智谱GLM大模型，为您解答金融风险管理相关问题</p>
+        </div>
+        <div class="section-divider"></div>
         <div class="ai-container">
             <div class="ai-header">
-                <div class="ai-avatar">&#129302;</div>
-                <div class="ai-title">
-                    <h3>风控博士 AI 助手</h3>
-                    <p>Powered by Zhipu AI GLM-4.5-Flash</p>
+                <div class="ai-avatar">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 </div>
-                <div class="ai-status">
-                    <span class="status-dot"></span>
-                    在线
+                <div class="ai-title">
+                    <h3>风控博士 AI</h3>
+                    <p>Zhipu GLM-4.5-Flash · Online</p>
                 </div>
             </div>
             <div class="ai-chat" id="aiChat">
-                <div class="message ai">
-                    您好！我是风控博士 AI 助手，基于智谱 GLM-4.5-Flash 大模型。我可以为您解答金融风险管理、投资策略、市场分析等相关问题。请问有什么可以帮助您的？
-                </div>
+                <div class="msg ai">您好！我是风控博士AI助手，基于智谱GLM-4.5-Flash大模型。我可以为您解答金融风险管理、监管政策、风控技术等相关问题。请问有什么可以帮助您的？</div>
             </div>
             <div class="ai-input-area">
-                <input type="text" class="ai-input" id="aiInput" placeholder="请输入您的问题..." maxlength="500">
+                <input type="text" class="ai-input" id="aiInput" placeholder="输入您的问题..." maxlength="500">
                 <button class="ai-send" id="aiSend" onclick="sendMessage()">发送</button>
             </div>
         </div>
     </section>
 
-    <section class="magazines" id="magazines">
+    <!-- MAGAZINES -->
+    <section id="magazines">
         <div class="section-header">
-            <h2>期刊杂志</h2>
-            <p>《上财风险管理论坛》电子版PDF下载</p>
+            <div class="section-title-group">
+                <h2>期刊杂志</h2>
+                <div class="subtitle">SUFE RISK MANAGEMENT FORUM</div>
+            </div>
+            <p class="section-desc">《上财风险管理论坛》电子版PDF下载</p>
         </div>
-        <div class="magazines-grid" id="magazinesGrid">
-            <!-- Magazines will be loaded dynamically -->
-        </div>
+        <div class="section-divider"></div>
+        <div class="magazines-grid" id="magazinesGrid"></div>
     </section>
 
+    <!-- QR -->
     <section class="qr-section" id="qr">
         <div class="section-header">
-            <h2>关注公众号</h2>
-            <p>扫码关注"风控博士沙龙"微信公众号，获取最新内容</p>
+            <div class="section-title-group">
+                <h2>关注公众号</h2>
+                <div class="subtitle">WECHAT OFFICIAL ACCOUNT</div>
+            </div>
         </div>
+        <div class="section-divider"></div>
         <div class="qr-container">
             <div class="qr-code">
                 <img src="./qrcode.jpg" alt="风控博士沙龙公众号二维码">
             </div>
             <h3>风控博士沙龙</h3>
-            <p>金融风险管理专业平台<br>与《上财风险管理论坛》杂志深度合作</p>
-            <p style="font-size: 0.85rem; color: var(--accent);">微信公众号：风控博士沙龙</p>
+            <p>金融风险管理专业平台</p>
+            <p style="font-size: 0.78rem; color: var(--accent);">扫码关注获取最新内容</p>
         </div>
     </section>
 
     <footer>
         <div class="footer-links">
             <a href="#home">首页</a>
-            <a href="#articles">文章</a>
-            <a href="#magazines">期刊杂志</a>
+            <a href="#regulatory">监管动态</a>
+            <a href="#startups">风控科创</a>
+            <a href="#training">培训认证</a>
+            <a href="#courses">视频课程</a>
             <a href="#ai">AI助手</a>
             <a href="#qr">公众号</a>
         </div>
-        <p>风控博士沙龙 &copy; 2024-2025 | 金融风险管理专业平台</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem;">本站内容同步自"风控博士沙龙"微信公众号</p>
+        <p>风控博士沙龙 &copy; 2024-2026 | 金融风险管理专业平台</p>
+        <p style="margin-top: 0.4rem; font-size: 0.72rem;">由斯文博士创立 · 与《上财风险管理论坛》杂志深度合作</p>
     </footer>
 
     <script>
-        // Articles data with WeChat links
-        const articles = [
+        // === NAV CLOCK ===
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('navClock').textContent = `${h}:${m}:${s} CST`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // === REGULATORY DATA ===
+        const regulations = [
             {
-                tag: "公告",
-                title: "【公告】风控博士沙龙第一届理事会第一次会议决议公告",
-                summary: "风控博士沙龙第一届理事会第一次会议以实体会议的形式于2016年5月19日在上海召开，会议应到理事会成员4名，实到4名。",
-                author: "风控博士沙龙",
-                date: "2016-05-20",
-                source: "风控博士沙龙",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=402846556&idx=1&sn=3d0b7f2e8c5d9a1b4e6f8c2d4a7b9e1f"
+                region: 'china', flag: '🇨🇳', regionName: 'CHINA',
+                title: '《金融机构产品适当性管理办法》',
+                agency: '国家金融监督管理总局',
+                date: '2025-07-11',
+                summary: '建立覆盖银行、保险、信托、理财等广泛金融业态的统一适当性管理框架。要求金融机构"了解产品、了解客户"，对投资型产品划分风险等级并动态管理，2026年2月1日施行。',
+                tag: '适当性管理', tagClass: 'tag-china',
+                url: 'http://big5.www.gov.cn/gate/big5/www.gov.cn/govweb/gongbao/2025/issue_12246/202508/content_7038009.html'
             },
             {
-                tag: "公告",
-                title: "【公告】风控博士沙龙首批金融职业导师团名单(资本市场方向)",
-                summary: "风控博士沙龙最终遴选出首批金融职业导师团，共计六位，所有导师均在资本市场领域拥有非常丰富的从业经历与职场阅历。",
-                author: "风控博士沙龙",
-                date: "2016-03-23",
-                source: "风控博士沙龙",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=401234567&idx=1&sn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+                region: 'china', flag: '🇨🇳', regionName: 'CHINA',
+                title: '《金融基础设施监督管理办法》',
+                agency: '中国人民银行、中国证监会',
+                date: '2025-07-25',
+                summary: '明确金融基础设施认定标准（清算结算系统、中央对手方、交易设施等六大类）和宏观审慎管理要求，覆盖设立、运营、风险管理、退出全流程。2025年10月1日施行。',
+                tag: '金融基础设施', tagClass: 'tag-china',
+                url: 'http://big5.www.gov.cn/gate/big5/www.gov.cn/govweb/gongbao/2025/issue_12246/202508/content_7038010.html'
             },
             {
-                tag: "新春贺词",
-                title: "风控博士沙龙2022年新春贺词",
-                summary: "值此辞旧迎新、虎年新春来临之际，我谨代表风控博士沙龙，向长期以来关心和支持风险管理事业的各界...",
-                author: "斯文博士",
-                date: "2022-01-31",
-                source: "风控博士沙龙",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=502846556&idx=1&sn=2d0b7f2e8c5d9a1b4e6f8c2d4a7b9e2f"
+                region: 'china', flag: '🇨🇳', regionName: 'CHINA',
+                title: '《金融机构消费者权益保护监管评价办法》',
+                agency: '国家金融监督管理总局',
+                date: '2025-09-10',
+                summary: '评价要素调整为体制机制、适当性管理、营销行为管理、纠纷化解、金融教育、消费者服务、个人信息保护7项，实施差异化监管措施。',
+                tag: '消保监管', tagClass: 'tag-china',
+                url: '#'
             },
             {
-                tag: "新春贺词",
-                title: "风控博士沙龙丙午马年新春贺词",
-                summary: "亲爱的同仁们：值此丙午马年新春佳节来临之际，我们怀着无比感恩与振奋的心情，向长期以来关心、支持、参与"风控博士沙龙"...",
-                author: "斯文博士",
-                date: "2016-02-20",
-                source: "风控博士沙龙",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=302846556&idx=1&sn=1d0b7f2e8c5d9a1b4e6f8c2d4a7b9e3f"
+                region: 'china', flag: '🇨🇳', regionName: 'CHINA',
+                title: '《商业银行并购贷款管理办法（征求意见稿）》',
+                agency: '国家金融监督管理总局',
+                date: '2025-08-20',
+                summary: '拓宽并购贷款适用范围，支持参股型并购；提高并购贷款占交易价款比例上限、延长贷款最长期限；强调偿债能力评估与多维度风险影响评估。',
+                tag: '并购贷款', tagClass: 'tag-china',
+                url: '#'
             },
             {
-                tag: "新年贺词",
-                title: "风控博士沙龙理事长华尔街先生2019年新年贺词(音频)",
-                summary: "2015年9月创设了"风控博士沙龙"微信公众号并且担任沙龙的理事长，2017年11月发起设立上海财经大学风险管理校友俱乐部并创办...",
-                author: "斯文博士",
-                date: "2018-12-31",
-                source: "风控博士沙龙",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=452846556&idx=1&sn=4d0b7f2e8c5d9a1b4e6f8c2d4a7b9e4f"
+                region: 'china', flag: '🇨🇳', regionName: 'CHINA',
+                title: '《关于修改〈证券公司分类监管规定〉的决定》',
+                agency: '中国证监会',
+                date: '2025-08-22',
+                summary: '评价框架调整为"风险管理能力、持续合规状况、业务发展和功能发挥状况"，突出风险管理能力权重，强化综合惩戒，按"过罚相当"原则优化扣分梯度。',
+                tag: '分类监管', tagClass: 'tag-china',
+                url: '#'
             },
             {
-                tag: "公告",
-                title: "【公告】风控博士沙龙首届学术委员会主席团成立",
-                summary: "为了有效提升风控博士沙龙的学术水平，进一步加强理论研究与风控实务的有机融合，即日起设立学术委员会，作为本沙龙的最高研究...",
-                author: "风控博士沙龙",
-                date: "2016-03-18",
-                source: "风控博士沙龙",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=401234568&idx=1&sn=b1c2d3e4f5g6h7i8j9k0l1m2n3o4p5q6"
+                region: 'us', flag: '🇺🇸', regionName: 'USA',
+                title: 'SR 26-2《模型风险管理修订指引》',
+                agency: '美联储、OCC、FDIC联合',
+                date: '2026-04-17',
+                summary: '取代2011年SR 11-7原指引。转向原则导向方法：收窄"模型"定义，明确将生成式和智能体AI排除在适用范围外，引入统一300亿美元资产适用门槛，建立模型重要性评估框架。',
+                tag: '模型风险', tagClass: 'tag-us',
+                url: 'https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf'
             },
             {
-                tag: "对话风控官",
-                title: "【对话风控官】衍生产品与风控指标 风险管理的任督二脉——对话光大证券首席风险官王勇博士",
-                summary: "风控博士沙龙：王博士，您好！非常感谢您做客风控博士沙龙，我们十分期待能够聆听您关于衍生产品与风险管理的个人洞见。",
-                author: "王勇博士",
-                date: "2016-05-09",
-                source: "风控博士沙龙",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=402846557&idx=1&sn=5d0b7f2e8c5d9a1b4e6f8c2d4a7b9e5f"
+                region: 'us', flag: '🇺🇸', regionName: 'USA',
+                title: '禁止监管机构使用声誉风险最终规则',
+                agency: 'FDIC、OCC、美联储联合',
+                date: '2026-04-10',
+                summary: '将"声誉风险"从监管框架中正式剔除。更新15份跨机构文件（涉及资产证券化、次级贷款、对手方信用风险管理等），删除声誉风险相关表述，确保监管决策基于实质性金融风险。',
+                tag: '声誉风险', tagClass: 'tag-us',
+                url: 'https://www.fdic.gov/news/financial-institution-letters/2026/agencies-remove-references-reputation-risk-interagency'
             },
             {
-                tag: "风控备忘录",
-                title: "【风控备忘录】为什么选择风险管理作为个人职业?",
-                summary: "出版专著一本，风控博士沙龙的发起人兼理事长，上海国际金融风控官高峰论坛秘书长，在美国纽约大学、中国人民大学、上海交通大...",
-                author: "斯文博士",
-                date: "2016-11-08",
-                source: "风控博士沙龙",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=412846556&idx=1&sn=6d0b7f2e8c5d9a1b4e6f8c2d4a7b9e6f"
+                region: 'us', flag: '🇺🇸', regionName: 'USA',
+                title: 'OCC与FDIC退出《杠杆贷款跨机构指引》',
+                agency: 'OCC、FDIC',
+                date: '2025-12-05',
+                summary: '正式撤回2013年《杠杆贷款跨机构指引》。认为原指引过度限制性，提出8项稳健贷款一般原则替代，包括管理信用与流动性风险、明确风险偏好、全生命周期监控等。',
+                tag: '杠杆贷款', tagClass: 'tag-us',
+                url: 'https://www.whitecase.com/insight-alert/comptroller-currency-and-fdic-withdraw-interagency-leveraged-lending-guidance'
             },
             {
-                tag: "风控备忘录",
-                title: "【风控备忘录】风险管理工作中的情商(一)",
-                summary: "出版专著一本，风控博士沙龙的发起人兼理事长，上海国际金融风控官高峰论坛秘书长，在美国纽约大学、中国人民大学、上海交通大...",
-                author: "斯文博士",
-                date: "2016-11-24",
-                source: "风控博士沙龙",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=412846557&idx=1&sn=7d0b7f2e8c5d9a1b4e6f8c2d4a7b9e7f"
+                region: 'eu', flag: '🇪🇺', regionName: 'EUROPE',
+                title: 'EBA《风险评估报告（2025年12月）》',
+                agency: '欧洲银行业管理局（EBA）',
+                date: '2025-12',
+                summary: '指出地缘政治不稳定和财政压力上升正增加欧洲银行风险。核心风险包括地缘政治风险、对非银金融机构敞口增加、运营风险居高、商业地产和中小企业Stage 2贷款高企。CET1比率达16.3%创历史新高。',
+                tag: '风险评估', tagClass: 'tag-eu',
+                url: 'https://www.eba.europa.eu/publications-and-media/publications/risk-assessment-report-december-2025'
             },
             {
-                tag: "心理健康",
-                title: "金融危机下金融从业人员心理健康、相关影响和应对措施",
-                summary: "基于风险视角下的思考，探讨金融危机对金融从业人员心理健康的影响，分析银行从业人员抑郁症状水平、致郁因素，并提出应对建议。",
-                author: "张天源",
-                date: "2024-03-28",
-                source: "《上财风险管理论坛》2024年第1期",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=2651012345&idx=1&sn=mental_health_finance"
+                region: 'eu', flag: '🇪🇺', regionName: 'EUROPE',
+                title: 'ESAs联合委员会《2025年秋季欧盟金融体系风险声明》',
+                agency: 'EBA、ESMA、EIOPA',
+                date: '2025-秋',
+                summary: '敦促金融机构对宏观金融和运营风险保持警惕。鼓励将地缘政治和贸易相关风险纳入战略规划，强调网络和加密资产风险日益增长的系统性相关性。',
+                tag: '系统性风险', tagClass: 'tag-eu',
+                url: 'https://www.eba.europa.eu/publications-and-media/press-releases/european-supervisors-tell-financial-institutions-stay-alert-stability-risks-uncertain-and-volatile'
             },
             {
-                tag: "职业解读",
-                title: "风险经理是干什么的？——VaR范畴内的工作",
-                summary: "选自Aaron Brown所著《Red-Blooded Risk》第十二章，讨论风险经理的职业标准、前台风险经理的定量分析工作及VaR在工作流程中的应用。",
-                author: "Aaron Brown / 张天源译",
-                date: "2024-01-15",
-                source: "风控博士沙龙 / 中证报价投教基地",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=2651011987&idx=1&sn=risk_manager_var"
+                region: 'eu', flag: '🇪🇺', regionName: 'EUROPE',
+                title: 'EBA《加密资产敞口审慎处理监管技术标准》',
+                agency: '欧洲银行业管理局（EBA）',
+                date: '2025',
+                summary: '依据CRR 3规定机构计算和汇总加密资产敞口的技术要素，统一各类加密资产敞口（包括ARTs和无支撑加密资产）的资本要求，与巴塞尔标准和MiCA法规对齐。',
+                tag: '加密资产', tagClass: 'tag-eu',
+                url: 'https://www.eba.europa.eu/publications-and-media/press-releases/eba-publishes-draft-technical-standards-prudential-treatment-crypto-asset-exposures-under-capital'
             },
             {
-                tag: "交易策略",
-                title: "止损",
-                summary: "讨论止损在金融交易中的重要性和应用，强调止损不仅是风控措施，也是交易策略的核心。深入探讨如何正确设置止损点。",
-                author: "Aaron Brown / 杨成佳、张天源译",
-                date: "2024",
-                source: "《上财风险管理论坛》2024年第4期",
-                url: "https://mp.weixin.qq.com/s?__biz=MzA5NjEyMDUyMA==&mid=2651012567&idx=1&sn=stop_loss_trading"
+                region: 'eu', flag: '🇪🇺', regionName: 'EUROPE',
+                title: 'ECB《内部模型指引（修订版）》',
+                agency: '欧洲央行（ECB银行业监管）',
+                date: '2025-07',
+                summary: '修订内部模型指引以纳入CRR3监管要求更新，应对机器学习（ML）使用，强化治理标准。',
+                tag: '内部模型', tagClass: 'tag-eu',
+                url: 'https://www.bankingsupervision.europa.eu/ecb/pub/pdf/ssm.supervisory_guide202507.en.pdf'
+            },
+            {
+                region: 'basel', flag: '🏦', regionName: 'BCBS',
+                title: '《气候相关金融风险自愿披露框架》',
+                agency: '巴塞尔银行监管委员会（BCBS）',
+                date: '2025-06-13',
+                summary: '全球首次发布专门针对气候风险的统一披露框架。包含定性信息表格与定量信息模板（按行业融资排放量、物理风险敞口、房地产能效敞口等），为未来纳入支柱三强制披露奠定基础。',
+                tag: '气候风险', tagClass: 'tag-basel',
+                url: 'https://www.bis.org/bcbs/publications.htm'
+            },
+            {
+                region: 'basel', flag: '🏦', regionName: 'BCBS',
+                title: '《机器可读第三支柱披露标准格式（征求意见稿）》',
+                agency: '巴塞尔银行监管委员会（BCBS）',
+                date: '2025-12-05',
+                summary: '提议在披露标准中增加机器可读格式要求，使银行披露的Pillar 3数据更易获取和聚合。引入标准化机器可读定量Pillar 3披露要求及技术规范。征求意见截至2026年3月5日。',
+                tag: '信息披露', tagClass: 'tag-basel',
+                url: 'https://www.bis.org/press/p251205.htm'
+            },
+            {
+                region: 'basel', flag: '🏦', regionName: 'BCBS',
+                title: '《交易对手信用风险敞口对冲技术修订》',
+                agency: '巴塞尔银行监管委员会（BCBS）',
+                date: '2025-10',
+                summary: '对巴塞尔框架进行技术修订，涉及交易对手信用风险敞口对冲处理，并附数值示例说明。已整合入合并巴塞尔框架。',
+                tag: '交易对手风险', tagClass: 'tag-basel',
+                url: 'https://www.bis.org/bcbs/publ/d600.pdf'
+            },
+            {
+                region: 'basel', flag: '🏦', regionName: 'BCBS',
+                title: '《运营风险标准法技术修订及FAQ最终版》',
+                agency: '巴塞尔银行监管委员会（BCBS）',
+                date: '2026-03',
+                summary: '对巴塞尔框架中运营风险标准法进行最终技术修订，同时包含市场风险标准法常见问题回复。委员会成员同意尽快实施，最迟三年内。',
+                tag: '运营风险', tagClass: 'tag-basel',
+                url: 'https://www.bis.org/bcbs/publ/d610.htm'
             }
         ];
 
-        // Render articles
-        function renderArticles() {
-            const grid = document.getElementById('articlesGrid');
-            grid.innerHTML = articles.map(article => `
-                <div class="article-card">
-                    <span class="article-tag">${article.tag}</span>
-                    <h3>${article.title}</h3>
-                    <p>${article.summary}</p>
-                    <a class="article-link" href="${article.url}" target="_blank" rel="noopener noreferrer">
-                        阅读原文
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </a>
-                    <div class="article-meta">
-                        <div class="article-author">
-                            <div class="author-avatar">${article.author.charAt(0)}</div>
-                            <span>${article.author}</span>
+        function renderRegulations(filter = 'all') {
+            const list = document.getElementById('regList');
+            const filtered = filter === 'all' ? regulations : regulations.filter(r => r.region === filter);
+            document.getElementById('statRegs').textContent = filtered.length + '+';
+            list.innerHTML = filtered.map(r => `
+                <div class="reg-item fade-up">
+                    <div class="reg-region">
+                        <div class="reg-flag">${r.flag}</div>
+                        <div class="reg-region-name">${r.regionName}</div>
+                    </div>
+                    <div class="reg-body">
+                        <h3><a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.title}</a></h3>
+                        <p class="reg-summary">${r.summary}</p>
+                        <div class="reg-meta">
+                            <span class="reg-tag ${r.tagClass}">${r.tag}</span>
+                            <span>📋 ${r.agency}</span>
                         </div>
-                        <span>${article.date}</span>
+                    </div>
+                    <div class="reg-date">${r.date}</div>
+                </div>
+            `).join('');
+            observeFadeUp();
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderRegulations(btn.dataset.filter);
+            });
+        });
+
+        renderRegulations();
+
+        // === STARTUPS DATA ===
+        const startups = [
+            {
+                name: '同盾科技', abbr: 'TD', color: '#00f0ff',
+                location: '杭州 · 2012',
+                desc: '基于AI的决策智能平台"智策"和隐私计算共享智能平台"智邦"。聚焦金融风险、安全风险、政府治理风险三大场景。2026年初推出"大模型+智能体"三类核心解决方案，已在多家银行落地。',
+                tags: ['AI风控', '反欺诈', '隐私计算', '智能体'],
+                funding: 'D轮 / 超1亿美元',
+                url: 'https://www.tongdun.net'
+            },
+            {
+                name: '百融云创', abbr: 'BR', color: '#d4af37',
+                location: '北京 · 港股6608.HK',
+                desc: 'AI-native科技企业，采用"模型即服务(MaaS)"和"业务即服务(BaaS)"模式。自研多模态基础模型，围绕通用与行业大模型、决策智能与生成式智能形成产品矩阵。2025年总收入29.20亿元。',
+                tags: ['MaaS', '大模型', '决策智能', '港股上市'],
+                funding: '上市公司',
+                url: 'https://www.brgroup.com'
+            },
+            {
+                name: '冰鉴科技', abbr: 'IK', color: '#00d68f',
+                location: '上海 · 2015',
+                desc: '基于AI技术的独立第三方智能风控平台，主营小微企业和个人信用评估。为金融机构提供从额度审批、反欺诈到精准营销的全方位服务，是金融机构数字化转型领域的龙头企业。',
+                tags: ['信用评估', '小微企业', '智能风控'],
+                funding: 'C+轮 / 估值约46亿元',
+                url: 'https://www.icekredit.com'
+            },
+            {
+                name: 'Feedzai', abbr: 'FZ', color: '#ffa502',
+                location: '美国/葡萄牙 · 2011',
+                desc: 'AI原生金融犯罪防范平台，覆盖交易欺诈、诈骗防范、AML交易监控。服务全球五大银行中的四家，年处理1200亿事件，保护约9万亿美元支付。2025年与欧洲央行签署数字欧元欺诈防范框架协议。',
+                tags: ['反欺诈', 'AML', '数字欧元', '独角兽'],
+                funding: '20亿美元估值',
+                url: 'https://www.feedzai.com'
+            },
+            {
+                name: 'Featurespace', abbr: 'FS', color: '#ff4757',
+                location: '英国剑桥 · 2008',
+                desc: '核心产品ARIC Risk Hub，基于自适应行为分析的实时机器学习反欺诈与金融犯罪防范平台。服务HSBC、NatWest、Worldpay等大型银行和支付机构。2024年9月被Visa以约9.35亿美元收购。',
+                tags: ['行为分析', '反欺诈', 'ML', '被Visa收购'],
+                funding: '被Visa收购 $9.35亿',
+                url: 'https://www.featurespace.com'
+            },
+            {
+                name: 'Sift', abbr: 'SF', color: '#00f0ff',
+                location: '美国旧金山 · 2011',
+                desc: '数字信任与安全平台，通过大规模机器学习和全球信任网络实时预测和防范欺诈。服务DoorDash、Yelp等700+客户，年处理1万亿事件，可降低30%欺诈损失。',
+                tags: ['数字信任', '机器学习', '反欺诈', '独角兽'],
+                funding: '估值超10亿美元',
+                url: 'https://sift.com'
+            },
+            {
+                name: 'Quantifind', abbr: 'QF', color: '#d4af37',
+                location: '美国 · 2009',
+                desc: '核心产品Graphyte AI风险情报平台，融合ML、NLP、知识图谱和实体解析技术。服务全球前十金融机构中的6家。据Celent测算，头部银行部署其平台每年可削减最高1.779亿美元KYC成本。',
+                tags: ['AI风控', 'KYC', '知识图谱', '金融犯罪'],
+                funding: '2亿美元成长投资',
+                url: 'https://www.quantifind.com'
+            },
+            {
+                name: 'Forter', abbr: 'FT', color: '#00d68f',
+                location: '美国纽约 · 2013',
+                desc: '身份智能平台，覆盖数字商务全旅程。AI与ML结合，400毫秒内完成100%自动化审批/拒绝决策。服务超20万家企业，年处理3500亿美元商品交易总额。2025年被Frost & Sullivan评为行业领导者。',
+                tags: ['身份智能', '实时决策', '反欺诈'],
+                funding: '估值30亿美元',
+                url: 'https://www.forter.com'
+            },
+            {
+                name: 'Riskified', abbr: 'RS', color: '#ffa502',
+                location: '以色列特拉维夫 · 2012',
+                desc: 'AI驱动的电商反欺诈平台，提供Chargeback Guarantee退款保障。通过数据驱动的机器学习方法降低欺诈损失、提升交易通过率。2025年Q4首次实现GAAP盈利，标志从"欺诈担保"向"AI风险平台"转型。',
+                tags: ['电商反欺诈', '退款保障', '纽交所上市'],
+                funding: 'NYSE: RSKD',
+                url: 'https://www.riskified.com'
+            },
+            {
+                name: 'BehavioSec', abbr: 'BS', color: '#ff4757',
+                location: '瑞典/美国 · 2008',
+                desc: '行为生物识别技术先驱，通过分析用户鼠标移动、打字节奏、触屏手势等进行持续身份认证和反欺诈。2022年被LexisNexis Risk Solutions收购，整合至ThreatMetrix产品线。',
+                tags: ['行为生物识别', '持续认证', '被收购'],
+                funding: '被LexisNexis收购',
+                url: 'https://www.behaviosec.com'
+            }
+        ];
+
+        function renderStartups() {
+            document.getElementById('startupsGrid').innerHTML = startups.map(s => `
+                <div class="startup-card fade-up">
+                    <div class="startup-header">
+                        <div class="startup-logo" style="background:${s.color}22;border:1px solid ${s.color}55;color:${s.color};">${s.abbr}</div>
+                        <div class="startup-info">
+                            <h3>${s.name}</h3>
+                            <p>${s.location}</p>
+                        </div>
+                    </div>
+                    <p class="startup-desc">${s.desc}</p>
+                    <div class="startup-tags">
+                        ${s.tags.map(t => `<span class="startup-tag">${t}</span>`).join('')}
+                    </div>
+                    <div class="startup-funding">
+                        <span class="funding-amount">${s.funding}</span>
+                        <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="startup-link">
+                            访问官网 →
+                        </a>
                     </div>
                 </div>
             `).join('');
+            observeFadeUp();
         }
 
-        renderArticles();
+        renderStartups();
 
-        // Magazines data
-        const magazines = [
+        // === TRAINING DATA ===
+        const training = [
             {
-                title: "《上财风险管理论坛》",
-                issue: "2017年第2期",
-                theme: "风险管理专业期刊",
-                pages: 33,
-                date: "2017",
-                file: "./magazines/magazine_2017_02.pdf"
+                name: 'FRM 金融风险管理师', org: 'GARP · 全球风险管理专业人士协会',
+                type: 'cert', badge: '国际认证', badgeClass: 'badge-cert',
+                desc: '全球风控领域"黄金认证"，分Part I和Part II两级考试。涵盖风险管理基础、定量分析、金融市场与产品、市场风险、信用风险、操作风险等。2026年FRM中文考试全面开放。',
+                price: '$1,450-$2,050', priceClass: 'price-paid',
+                url: 'https://www.garp.org/frm/fees-payments'
             },
             {
-                title: "《上财风险管理论坛》",
-                issue: "2018年第1期",
-                theme: "风险管理专业期刊",
-                pages: 27,
-                date: "2018",
-                file: "./magazines/magazine_2018_01.pdf"
+                name: 'PRM 职业风险管理师', org: 'PRMIA · 国际职业风险管理师协会',
+                type: 'cert', badge: '国际认证', badgeClass: 'badge-cert',
+                desc: '与FRM并列的全球性风险管理认证，分4科考试，全年开放通过Pearson VUE考试中心或在线远程监考。涵盖金融理论、风险计量、市场/信用/操作风险等。',
+                price: '$600-$780', priceClass: 'price-paid',
+                url: 'https://www.prmia.org/'
             },
             {
-                title: "《上财风险管理论坛》",
-                issue: "2019年第1期",
-                theme: "大资管行业的风险管理",
-                pages: 26,
-                date: "2019",
-                file: "./magazines/magazine_2019_01.pdf"
+                name: 'CRMA 国际风险管理确认师', org: 'IIA · 国际内部审计师协会',
+                type: 'cert', badge: '国际认证', badgeClass: 'badge-cert',
+                desc: '面向内部审计人员的风险管理确认认证，专注于为审计委员会和高管提供风险管理确认能力。强调治理、风险与合规(GRC)，是唯一面向内部审计师的风险管理确认认证。',
+                price: '$380-$575', priceClass: 'price-paid',
+                url: 'https://www.theiia.org/'
+            },
+            {
+                name: '天弈方圆 · TGES', org: 'cfrisk.org · 风控博士沙龙',
+                type: 'domestic', badge: '国内平台', badgeClass: 'badge-domestic',
+                desc: '国内领先的金融风险管理专业教育与交流平台。定期举办前沿讲座（邀请银行业首席风险官、学者等业界大咖）、热点研讨、年度论坛。设有"天弈奖"评选，出版平台书刊。部分讲座免费线上参与。',
+                price: '讲座免费 / 专题¥3,800', priceClass: 'price-free',
+                url: 'https://www.cfrisk.org/'
+            },
+            {
+                name: '上财风险管理论坛', org: '上海财经大学金融学院',
+                type: 'domestic', badge: '学术期刊', badgeClass: 'badge-domestic',
+                desc: '季刊（2025年第3期已发布，总第33期），聚焦前沿风控议题。上海首席风险官交流研讨会已举办至第七届（2025年6月），主题如"金融风险管理与新兴工业化"，为风控精英搭建深度交流平台。',
+                price: '电子版免费', priceClass: 'price-free',
+                url: 'https://xy.shufe.edu.cn/cc/ca/c11018a249034/page.htm'
+            },
+            {
+                name: '风险管理与内控合规研修班', org: '上海国家会计学院',
+                type: 'executive', badge: '高管研修', badgeClass: 'badge-executive',
+                desc: '"对标一流，风险管理与内控合规多位一体协同体系建设与领先实践"研修班，2025年迭代升级。剖析标杆企业内控与风险管理先进实践，阐述风控合规"多位一体"管理思路。',
+                price: '收费课程', priceClass: 'price-paid',
+                url: 'https://edp.snai.edu/kc/80832.html'
+            },
+            {
+                name: '高顿教育 FRM培训', org: 'Gaodun · 国内FRM培训头部机构',
+                type: 'domestic', badge: '国内培训', badgeClass: 'badge-domestic',
+                desc: '与上财金融学院深度合作协办研讨会，提供FRM零基础入门试听课及系统培训课程。2026年FRM中文考试开放后推出更多本土化课程。',
+                price: '试听免费', priceClass: 'price-free',
+                url: 'https://www.gaodun.com/frm/'
+            },
+            {
+                name: '金融风险管理', org: '南京大学 · 学堂在线',
+                type: 'domestic', badge: '大学课程', badgeClass: 'badge-domestic',
+                desc: '中级难度，中文授课。涵盖金融机构风险管理核心理论与实践，适合金融专业学生与从业者系统学习。',
+                price: '免费', priceClass: 'price-free',
+                url: 'https://www.xuetangx.com/course/nju'
             }
         ];
 
-        // Render magazines
+        function renderTraining() {
+            document.getElementById('trainingGrid').innerHTML = training.map(t => `
+                <div class="training-card fade-up">
+                    <span class="training-badge ${t.badgeClass}">${t.badge}</span>
+                    <h3>${t.name}</h3>
+                    <p class="training-org">${t.org}</p>
+                    <p class="training-desc">${t.desc}</p>
+                    <div class="training-footer">
+                        <span class="training-price ${t.priceClass}">${t.price}</span>
+                        <a href="${t.url}" target="_blank" rel="noopener noreferrer" class="training-link">了解详情 →</a>
+                    </div>
+                </div>
+            `).join('');
+            observeFadeUp();
+        }
+
+        renderTraining();
+
+        // === VIDEO COURSES DATA ===
+        const videos = [
+            {
+                title: 'Financial Engineering and Risk Management',
+                provider: 'Columbia University 哥伦比亚大学',
+                platform: 'Coursera',
+                duration: '专项课程',
+                level: '高级',
+                url: 'https://www.coursera.org/specializations/financial-engineering-risk-management'
+            },
+            {
+                title: 'Portfolio and Risk Management',
+                provider: 'University of Geneva 日内瓦大学',
+                platform: 'Coursera',
+                duration: '评分4.7',
+                level: '中级',
+                url: 'https://www.coursera.org/learn/portfolio-risk-management'
+            },
+            {
+                title: 'Financial Risk Management with R',
+                provider: 'Duke University 杜克大学',
+                platform: 'Coursera',
+                duration: '评分8.3/10',
+                level: '中级',
+                url: 'https://www.coursera.org/learn/financial-risk-management-with-r'
+            },
+            {
+                title: 'Mathematical Methods for Quantitative Finance',
+                provider: 'MITx 麻省理工学院',
+                platform: 'edX',
+                duration: '12周',
+                level: '高级',
+                url: 'https://www.edx.org/course/mathematical-methods-for-quantitative-finance'
+            },
+            {
+                title: 'Derivatives Markets: Advanced Modeling',
+                provider: 'MITx 麻省理工学院',
+                platform: 'edX',
+                duration: '12周',
+                level: '高级',
+                url: 'https://www.edx.org/course/derivatives-markets-advanced-modeling'
+            },
+            {
+                title: 'Risk & Return',
+                provider: 'ColumbiaX 哥伦比亚大学',
+                platform: 'edX',
+                duration: '4周 · 评分4.6',
+                level: '入门',
+                url: 'https://www.edx.org/course/risk-return-2'
+            },
+            {
+                title: '2025 FRM中文英文考试精讲合集',
+                provider: 'B站UP主',
+                platform: 'Bilibili',
+                duration: 'P1+P2全科',
+                level: '考证',
+                url: 'https://www.bilibili.com/video/BV16bpRzhEgg/'
+            },
+            {
+                title: '2025年FRM一级基础精讲班',
+                provider: 'B站UP主',
+                platform: 'Bilibili',
+                duration: '含讲义',
+                level: '入门',
+                url: 'https://www.bilibili.com/video/BV1r5HkzbEUY/'
+            },
+            {
+                title: 'FRM一级二级中文领航计划速成全程班',
+                provider: 'B站UP主',
+                platform: 'Bilibili',
+                duration: '全程速成',
+                level: '考证',
+                url: 'https://www.bilibili.com/video/BV1moMXzYE8H/'
+            },
+            {
+                title: '金融风险管理',
+                provider: '南京大学',
+                platform: '学堂在线',
+                duration: '中文授课',
+                level: '中级',
+                url: 'https://www.xuetangx.com/course/nju'
+            }
+        ];
+
+        function renderVideos() {
+            document.getElementById('videoGrid').innerHTML = videos.map(v => `
+                <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="video-card fade-up">
+                    <div class="video-thumb">
+                        <div class="video-platform">${v.platform}</div>
+                        <div class="video-play">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="video-body">
+                        <h3>${v.title}</h3>
+                        <p class="video-provider">${v.provider}</p>
+                        <div class="video-meta">
+                            <span>⏱ ${v.duration}</span>
+                            <span>📊 ${v.level}</span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+            observeFadeUp();
+        }
+
+        renderVideos();
+
+        // === MAGAZINES ===
+        const magazines = [
+            { issue: '2017年第2期', theme: '风险管理专业期刊', pages: 33, file: './magazines/magazine_2017_02.pdf' },
+            { issue: '2018年第1期', theme: '风险管理专业期刊', pages: 27, file: './magazines/magazine_2018_01.pdf' },
+            { issue: '2019年第1期', theme: '大资管行业的风险管理', pages: 26, file: './magazines/magazine_2019_01.pdf' }
+        ];
+
         function renderMagazines() {
-            const grid = document.getElementById('magazinesGrid');
-            grid.innerHTML = magazines.map(mag => `
-                <div class="magazine-card">
-                    <div class="magazine-icon">&#128214;</div>
-                    <h3>${mag.title}</h3>
-                    <div class="issue-info">${mag.issue}</div>
-                    <p>${mag.theme}<br>共 ${mag.pages} 页 | ${mag.date}年刊</p>
-                    <a class="magazine-link" href="${mag.file}" target="_blank" rel="noopener noreferrer">
-                        阅读PDF
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
+            document.getElementById('magazinesGrid').innerHTML = magazines.map(m => `
+                <div class="mag-card fade-up">
+                    <div class="mag-icon">📖</div>
+                    <h3>上财风险管理论坛</h3>
+                    <div class="mag-issue">${m.issue}</div>
+                    <p>${m.theme}<br>共 ${m.pages} 页</p>
+                    <a href="${m.file}" target="_blank" rel="noopener noreferrer" class="mag-link">
+                        阅读 PDF
                     </a>
                 </div>
             `).join('');
+            observeFadeUp();
         }
 
         renderMagazines();
 
-        // AI Chat functionality
+        // === AI CHAT ===
         const API_KEY = '325d6fa364954d2e871c30ba95b553bd.KBdQdqgJgELJBhnv';
         const API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
 
@@ -1125,12 +1811,10 @@
             const sendBtn = document.getElementById('aiSend');
             const chat = document.getElementById('aiChat');
             const message = input.value.trim();
-
             if (!message) return;
 
-            // Add user message
             const userMsg = document.createElement('div');
-            userMsg.className = 'message user';
+            userMsg.className = 'msg user';
             userMsg.textContent = message;
             chat.appendChild(userMsg);
             chat.scrollTop = chat.scrollHeight;
@@ -1138,11 +1822,10 @@
             input.value = '';
             sendBtn.disabled = true;
 
-            // Add typing indicator
-            const typingIndicator = document.createElement('div');
-            typingIndicator.className = 'message ai typing-indicator';
-            typingIndicator.innerHTML = '<span></span><span></span><span></span>';
-            chat.appendChild(typingIndicator);
+            const typing = document.createElement('div');
+            typing.className = 'msg ai typing';
+            typing.innerHTML = '<span></span><span></span><span></span>';
+            chat.appendChild(typing);
             chat.scrollTop = chat.scrollHeight;
 
             try {
@@ -1155,81 +1838,63 @@
                     body: JSON.stringify({
                         model: 'glm-4.5-flash',
                         messages: [
-                            {
-                                role: 'system',
-                                content: '你是风控博士沙龙的AI助手，专注于金融风险管理领域。你具备深厚的金融风险管理知识，能够回答关于市场风险、信用风险、操作风险、流动性风险等各类风险管理问题。请用专业但易懂的方式回答用户的问题。'
-                            },
-                            {
-                                role: 'user',
-                                content: message
-                            }
+                            { role: 'system', content: '你是风控博士沙龙的AI助手，专注于金融风险管理领域。你具备深厚的金融风险管理知识，能够回答关于市场风险、信用风险、操作风险、流动性风险、监管政策、风控科技等各类风险管理问题。请用专业但易懂的方式回答。' },
+                            { role: 'user', content: message }
                         ],
                         temperature: 0.7,
                         max_tokens: 2000
                     })
                 });
 
-                // Remove typing indicator
-                typingIndicator.remove();
+                typing.remove();
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
                 const data = await response.json();
-                const aiResponse = data.choices[0].message.content;
-
                 const aiMsg = document.createElement('div');
-                aiMsg.className = 'message ai';
-                aiMsg.textContent = aiResponse;
+                aiMsg.className = 'msg ai';
+                aiMsg.textContent = data.choices[0].message.content;
                 chat.appendChild(aiMsg);
                 chat.scrollTop = chat.scrollHeight;
-
             } catch (error) {
-                // Remove typing indicator
-                typingIndicator.remove();
-
-                const errorMsg = document.createElement('div');
-                errorMsg.className = 'message ai';
-                errorMsg.textContent = '抱歉，我暂时无法连接到AI服务。请稍后再试，或者您可以通过公众号联系我们。';
-                chat.appendChild(errorMsg);
+                typing.remove();
+                const errMsg = document.createElement('div');
+                errMsg.className = 'msg ai';
+                errMsg.textContent = '抱歉，AI服务暂时不可用。请稍后再试。';
+                chat.appendChild(errMsg);
                 chat.scrollTop = chat.scrollHeight;
-                console.error('AI API Error:', error);
             }
 
             sendBtn.disabled = false;
         }
 
-        // Enter key to send
-        document.getElementById('aiInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
+        document.getElementById('aiInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') sendMessage();
         });
 
-        // Smooth scroll for navigation
+        // === SMOOTH SCROLL ===
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.background = 'rgba(10, 22, 40, 0.95)';
-            } else {
-                nav.style.background = 'rgba(10, 22, 40, 0.9)';
-            }
-        });
+        // === FADE UP OBSERVER ===
+        function observeFadeUp() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => entry.target.classList.add('visible'), i * 50);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-up:not(.visible)').forEach(el => observer.observe(el));
+        }
+
+        observeFadeUp();
     </script>
 </body>
 </html>
